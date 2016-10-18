@@ -1,0 +1,1 @@
+aws ecr list-images --repository-name scheduler --query 'imageIds[?type(imageTag)!=`string`].[imageDigest]' --output text | while read line; do aws ecr batch-delete-image --repository-name scheduler --image-ids imageDigest=$line; done
